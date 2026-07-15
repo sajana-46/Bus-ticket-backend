@@ -16,3 +16,26 @@ mongoose.connect("mongodb://sajana:2504@ac-ltz4eec-shard-00-00.pdwztor.mongodb.n
 
     }
 )
+const UserData = mongoose.model("Users", new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    gender: String,
+    age: String,
+    address: String,
+    createdAt: String
+}));
+
+app.get("/test", (req, res) => {
+    res.send("hiiii");
+});
+
+
+app.post("/add-user",async (req,res) => {
+    await UserData.create(req.body)
+    res.json({status : "Success"})
+})
+
+app.listen(3000,() =>{
+    console.log("server started")
+})
