@@ -16,3 +16,41 @@ mongoose.connect("mongodb://sajana:2504@ac-ltz4eec-shard-00-00.pdwztor.mongodb.n
 
     }
 )
+
+
+const Bus=mongoose.model("buses",new mongoose.Schema(
+    {
+        busNumber: String,
+    busName: String,
+    busType: String,
+    source: String,
+    destination: String,
+    departureTime: String,
+    arrivalTime: String,
+    totalSeats: String,
+    availableSeats: String,
+    fare: String
+    }
+
+    ))
+
+    app.get("/test",(req,res)=>{
+    res.send("server running")
+})
+
+
+
+
+
+
+
+app.post("/add-bus",async(req,res)=>{
+
+   await Bus.create(req.body)
+    res.json({"status":"success"})
+})
+
+
+ app.listen(3000,()=>{
+    console.log("server started")
+})
