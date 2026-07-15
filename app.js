@@ -57,6 +57,11 @@ app.post("/add-user", async (req, res) => {
     res.json({ status: "Success" });
 });
 
+app.post("/view-user", async (req, res) => {
+    const users = await UserData.find();
+    res.json(users);
+});
+
 app.listen(3000, () => {
     console.log("server started");
 });
