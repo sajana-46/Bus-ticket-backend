@@ -98,6 +98,18 @@ const UserData = mongoose.model("Users", new mongoose.Schema({
     createdAt: String
 }));
 
+const Booking = mongoose.model("bookings", new mongoose.Schema({
+    userId: String,
+    busId: String,
+    passengerName: String,
+    passengerAge: String,
+    passengerGender: String,
+    journeyDate: String,
+    seatNumber: String,
+    totalFare: String,
+    bookingStatus: String
+}));
+
 app.get("/test", (req, res) => {
     res.send("server running");
 });
@@ -120,6 +132,111 @@ app.post("/add-user", async (req, res) => {
 app.post("/view-user", async (req, res) => {
     const users = await UserData.find();
     res.json(users);
+});
+
+// User CRUD
+app.post("/update-user", async (req, res) => {
+    try {
+        const { _id, ...updateData } = req.body;
+        await UserData.findByIdAndUpdate(_id, updateData);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post("/delete-user", async (req, res) => {
+    try {
+        await UserData.findByIdAndDelete(req.body._id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete("/delete-user/:id", async (req, res) => {
+    try {
+        await UserData.findByIdAndDelete(req.params.id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Bus CRUD
+app.post("/update-bus", async (req, res) => {
+    try {
+        const { _id, ...updateData } = req.body;
+        await Bus.findByIdAndUpdate(_id, updateData);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post("/delete-bus", async (req, res) => {
+    try {
+        await Bus.findByIdAndDelete(req.body._id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete("/delete-bus/:id", async (req, res) => {
+    try {
+        await Bus.findByIdAndDelete(req.params.id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Booking CRUD
+app.post("/add-booking", async (req, res) => {
+    try {
+        await Booking.create(req.body);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.get("/view-bookings", async (req, res) => {
+    try {
+        const bookings = await Booking.find();
+        res.json(bookings);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post("/update-booking", async (req, res) => {
+    try {
+        const { _id, ...updateData } = req.body;
+        await Booking.findByIdAndUpdate(_id, updateData);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post("/delete-booking", async (req, res) => {
+    try {
+        await Booking.findByIdAndDelete(req.body._id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.delete("/delete-booking/:id", async (req, res) => {
+    try {
+        await Booking.findByIdAndDelete(req.params.id);
+        res.json({ status: "success" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.listen(3000, () => {
