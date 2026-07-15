@@ -16,3 +16,27 @@ mongoose.connect("mongodb://sajana:2504@ac-ltz4eec-shard-00-00.pdwztor.mongodb.n
 
     }
 )
+const UserData = mongoose.model("Users", new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String,
+    gender: String,
+    age: String,
+    address: String,
+    createdAt: String
+}));
+
+app.get("/test", (req, res) => {
+    res.send("hiuiii");
+});
+
+
+app.post("/view-user",async (req,res) => {
+    const users = await UserData.find()
+    res.json(users)
+})
+
+
+app.listen(3000,() =>{
+    console.log("server started")
+})
