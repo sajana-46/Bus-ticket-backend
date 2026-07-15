@@ -50,6 +50,12 @@ app.post("/add-bus",async(req,res)=>{
     res.json({"status":"success"})
 })
 
+app.post("/view-bus",async(req,res)=>{
+    const buses =await Bus.find()
+    res.json(buses)
+})
+
+
 
  app.listen(3000,()=>{
     console.log("server started")
