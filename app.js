@@ -42,6 +42,17 @@ app.post("/add-booking", async (req, res) => {
     }
 })
 
+// ADDED: Simple GET route so your frontend can retrieve data for the view page
+app.get("/view-bookings", async (req, res) => {
+    try {
+        const data = await Booking.find()
+        res.json(data)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ status: "Error", message: "Failed to fetch bookings" })
+    }
+})
+
 
 
 app.listen(3000, () => {
